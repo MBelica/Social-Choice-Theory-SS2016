@@ -1,0 +1,86 @@
+\documentclass[12pt]{extreport}
+
+%% Packages
+\usepackage{scrextend}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{chngcntr}
+\usepackage{cmap}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{lmodern}
+\usepackage{makeidx}
+\usepackage{mathtools} 
+\usepackage{xpatch}
+
+% Language Setup
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[english]{babel}
+
+% Options
+\makeatletter%%  
+  % Linkcolor, {0,0.35,0.35} for turquoise, {0,0,0} for black
+  \definecolor{linkcolor}{rgb}{0,0.35,0.35}
+  % Line spacing
+  \def\mystretch{1.2} 
+  % Publisher defined
+  \newcommand\publishers[1]{\newcommand\@publishers{#1}} 
+  % Enumerate fire 1. Level: \alph for a), b), ...
+  \renewcommand{\labelenumi}{\alph{enumi})} 
+  % Enumerate fore 2. Level: \roman for (i), (ii), ...
+  \renewcommand{\labelenumii}{(\roman{enumii})}
+  % Indent for first line on each paragraph
+  \setlength{\parindent}{0pt} 
+  % References on Enumerates, e.g.: 3.2 a)
+  \setlist[enumerate,1]{ref={\thesatz ~ \alph*)}}
+  % Proof-Environment: 'Proof:' instead 'Proof.'
+  \xpatchcmd{\proof}{\@addpunct{.}}{\@addpunct{:}}{}{} 
+  % Numbering of Figures, e.g.: Figure 4.1
+  \@ifundefined{thechapter}{}{\def\thefigure{\thechapter.\arabic{figure}}} 
+\makeatother%
+
+% Meta Setup 
+\title{Social Choice Theory}
+\author{Prof. Dr. Clemens Puppe}
+\date{Sommersemester 2016}
+\publishers{Karlsruher Institut for Technology}
+
+%% Template
+\makeatletter%
+\DeclareUnicodeCharacter{00A0}{ } \newcommand{\term}[1]{\index{#1}\textbf{#1}} \hypersetup{colorlinks,breaklinks, urlcolor=linkcolor, linkcolor=linkcolor, pdftitle=\@title, pdfauthor=\@author, pdfsubject=\@title, pdfcreator=\@publishers}\DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}} \ProcessOptions \def\baselinestretch{\mystretch} \setlength{\oddsidemargin}{0.125in} \setlength{\evensidemargin}{0.125in} \setlength{\topmargin}{0.5in} \setlength{\textwidth}{6.25in} \setlength{\textheight}{8in} \addtolength{\topmargin}{-\headheight} \addtolength{\topmargin}{-\headsep} \def\pulldownheader{ \addtolength{\topmargin}{\headheight} \addtolength{\topmargin}{\headsep} \addtolength{\textheight}{-\headheight} \addtolength{\textheight}{-\headsep} } \def\pullupfooter{ \addtolength{\textheight}{-\footskip} } \def\ps@headings{\let\@mkboth\markboth \def\@oddfoot{} \def\@evenfoot{} \def\@oddhead{\hbox {}\sl \rightmark \hfil \rm\thepage} \def\chaptermark##1{\markright {\uppercase{\ifnum \c@secnumdepth >\m@ne \@chapapp\ \thechapter. \ \fi ##1}}} \pulldownheader } \def\ps@myheadings{\let\@mkboth\@gobbletwo \def\@oddfoot{} \def\@evenfoot{} \def\sectionmark##1{} \def\subsectionmark##1{}  \def\@evenhead{\rm \thepage\hfil\sl\leftmark\hbox {}} \def\@oddhead{\hbox{}\sl\rightmark \hfil \rm\thepage} \pulldownheader }	\def\chapter{\cleardoublepage  \thispagestyle{plain} \global\@topnum\z@ \@afterindentfalse \secdef\@chapter\@schapter} \def\@makeschapterhead#1{ {\parindent \z@ \raggedright \normalfont \interlinepenalty\@M \Huge \bfseries  #1\par\nobreak \vskip 40\p@ }} \newcommand{\indexsection}{chapter} \patchcmd{\@makechapterhead}{\vspace*{50\p@}}{}{}{} \def\maketitle{ \begin{titlepage} ~\vspace{3cm} \begin{center} {\Huge \@title} \end{center} \vspace*{1cm} \begin{center} {\large \@author} \end{center} \begin{center} \@date \end{center} \vspace*{7cm} \begin{center} \@publishers \end{center} \vfill \end{titlepage} }
+\makeatother%
+
+% Create Index 
+\makeindex 
+
+\begin{document}
+
+% Titlepage
+\pagenumbering{Alph} 
+\begin{titlepage}
+	\maketitle
+	\thispagestyle{empty}
+\end{titlepage}
+	
+\pagenumbering{arabic}
+% Table of Content
+\tableofcontents
+\thispagestyle{empty}
+% Skript - Start
+\input{chapter/0.-introduction}
+\input{chapter/1.0.-standard_theory}
+%Script - End
+
+\appendix
+
+\input{credit}
+
+\cleardoublepage
+\phantomsection
+\renewcommand{\indexname}{Index}
+\addcontentsline{toc}{chapter}{\indexname}
+\printindex
+
+\end{document}
